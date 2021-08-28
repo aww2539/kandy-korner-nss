@@ -12,9 +12,8 @@ export const KandyKorner = () => {
 
             <Locations />
 
-            <ProductTypes />
-
             <ProductList />
+
         </>
     )
 }

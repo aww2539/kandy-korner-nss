@@ -7,7 +7,7 @@ export const ProductList = () => {
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/products")
+            fetch("http://localhost:8088/products?_expand=productType&_sort=productTypeId&_order=asc")
                 .then(res => res.json())
                 .then(
                     (data) => {
@@ -26,7 +26,7 @@ export const ProductList = () => {
             {
                 products.map(
                     (product) => {
-                        return <p key={`product--${product.id}`}>{product.name}</p>
+                        return <p key={`product--${product.id}`}>{product.name} - Type: {product.productType.name}</p>
                     }
                 )
             }
