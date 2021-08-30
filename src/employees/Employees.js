@@ -8,15 +8,19 @@ export const Employees = () => {
     const [active, setActive] = useState("")
     const history = useHistory()
 
+    const getEmployeeList = () => {
+        fetch("http://localhost:8088/employees?_expand=location&_sort=locationId&_order=desc")
+            .then(res => res.json())
+            .then(
+                (data) => {
+                    getEmployees(data)
+                }
+            )
+    }
+    
     useEffect(
         () => {
-            fetch("http://localhost:8088/employees?_expand=location&_sort=locationId&_order=desc")
-                .then(res => res.json())
-                .then(
-                    (data) => {
-                        getEmployees(data)
-                    }
-                )
+            getEmployeeList()
         },
         []
     )
@@ -25,6 +29,14 @@ export const Employees = () => {
         const activeEmployeeCount = employees.filter(employee => employee.id > 0).length
         setActive(`We currently employ ${activeEmployeeCount} people at all our locations`)
     }, [employees])
+
+    const fireEmployee = (id) => {
+        fetch(`http://localhost:8088/employees/${id}`, {
+            method: "DELETE"
+        })
+        .then(getEmployeeList())
+    }
+    // Why doesn't this make the new list populate?
 
 
     return (
@@ -39,7 +51,14 @@ export const Employees = () => {
             {
                 employees.map(
                     (employee) => {
-                        return <p key={`employee--${employee.id}`}>{employee.name} | City: {employee.location.city} | Position: {employee.position}</p>
+                        return <div key={`employee--${employee.id}`}>
+                                    <p>{employee.name} | City: {employee.location.city} | Position: {employee.position}</p>
+                                    <button key={`fire--${employee.id}`} onClick={
+                                        () => {
+                                            fireEmployee(employee.id)
+                                        }
+                                    }>YOU'RE FIRED!</button>
+                                </div>
                     }
                 )
             }
