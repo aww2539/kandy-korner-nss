@@ -1,0 +1,13 @@
+table {
+    width: 50%;
+    min-width: 400px;
+}
+
+th, td {
+    text-align: center;
+}
+
+table, th, td {
+    border:1px solid black;
+  }
+

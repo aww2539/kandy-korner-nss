@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import "./Orders.css"
 
 export const Orders = () => {
     const [purchases, getPurchases] = useState([])
     const [active, setActive] = useState("")
+    const [mapState, setMapState] = useState(new Map())
     const { userId } = useParams()
+
 
     useEffect( () => {
         fetch(`http://localhost:8088/purchases?customerId=${userId}&_expand=product&_expand=customer`)
@@ -19,18 +22,30 @@ export const Orders = () => {
         setActive(`You have purchased ${activeOrderCount} items`)
     }, [purchases])
 
+
+    //function for new map
+    //checks all the stuff
     return (
         <>
             <h2>My Orders</h2>
             <h3>{ active }</h3>
+            <table>
+                <tr>
+                    <th>Candy</th>
+                    <th>Price</th>
+                </tr>
 
             {
                 purchases.map(
-                    (purchase) => {
-                        return <p key={`purchase--${purchase.id}`}>Candy: {purchase.product.name} | Price: {purchase.product.price}</p>
+                    (purchase) => { return <tr key={`table--${purchase.id}`}>
+                            <td key={`name--${purchase.id}`}>{purchase.product.name}</td>
+                            <td key={`price--${purchase.id}`}>{purchase.product.price}</td>
+                        </tr>
                     }
                 )
             }
+            </table>
         </>
     )
 }
+

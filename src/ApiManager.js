@@ -1,5 +1,15 @@
 
 
+export const getAllCustomers = () => {
+    return fetch("http://localhost:8088/customers")
+        .then(res => res.json())
+}
+
+export const getAllPurchases = () => {
+    return fetch("http://localhost:8088/purchases")
+        .then(res => res.json())
+}
+
 export const getAllLocations = () => {
     return fetch("http://localhost:8088/locations")
         .then(res => res.json())
