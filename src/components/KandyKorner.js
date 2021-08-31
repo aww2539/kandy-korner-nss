@@ -13,6 +13,7 @@ export const KandyKorner = () => (
           return (
             <>
               <NavBar />
+              <h1>Welcome to Kandy Korner!</h1>
               <ApplicationViews />
             </>
           );

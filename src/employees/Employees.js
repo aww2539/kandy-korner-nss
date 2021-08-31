@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
+import { getAllEmployees } from "../ApiManager"
 
 
 
 export const Employees = () => {
-    const [employees, getEmployees] = useState([])
+    const [employees, updateEmployees] = useState([])
     const [active, setActive] = useState("")
     const history = useHistory()
 
     const getEmployeeList = () => {
-        fetch("http://localhost:8088/employees?_expand=location&_sort=locationId&_order=desc")
-            .then(res => res.json())
+        getAllEmployees()
             .then(
                 (data) => {
-                    getEmployees(data)
+                    updateEmployees(data)
                 }
             )
     }
-    
+
     useEffect(
         () => {
             getEmployeeList()
@@ -34,9 +34,8 @@ export const Employees = () => {
         fetch(`http://localhost:8088/employees/${id}`, {
             method: "DELETE"
         })
-        .then(getEmployeeList())
+        .then(getEmployeeList)
     }
-    // Why doesn't this make the new list populate?
 
 
     return (

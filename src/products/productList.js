@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { getAllProducts } from "../ApiManager"
 
 
 
@@ -8,8 +9,7 @@ export const ProductList = () => {
 
     useEffect(
         () => {
-            fetch("http://localhost:8088/products?_expand=productType&_sort=productTypeId&_order=asc")
-                .then(res => res.json())
+            getAllProducts()
                 .then(
                     (data) => {
                         getProducts(data)
