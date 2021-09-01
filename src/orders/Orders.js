@@ -5,7 +5,7 @@ import "./Orders.css"
 export const Orders = () => {
     const [purchases, getPurchases] = useState([])
     const [active, setActive] = useState("")
-    const [mapState, setMapState] = useState(new Map())
+    const [totals, setTotals] = useState(new Map())
     const { userId } = useParams()
 
 
@@ -20,30 +20,55 @@ export const Orders = () => {
     useEffect(() => {
         const activeOrderCount = purchases.filter(purchase => purchase.id > 0).length
         setActive(`You have purchased ${activeOrderCount} items`)
+
+        setTotals(createLineItem())
     }, [purchases])
 
 
-    //function for new map
-    //checks all the stuff
-    return (
+    // for purchase of purchases
+    // if (productId === product.id)
+    // purchaseTotal ++1
+
+  
+
+    const createLineItem = () => {
+        const purchaseList = new Map()
+
+        for (const purchase of purchases) {
+
+            if (purchaseList.has(purchase.productId)) {
+               purchaseList.get(purchase.productId).total++
+            
+            } else {
+                purchaseList.set(purchase.productId, {total: 1, price: purchase.product.price, name: purchase.product.name})
+            } 
+        }
+        return purchaseList
+    }
+    
+
+    
+
+
+    return ( 
+        
         <>
             <h2>My Orders</h2>
             <h3>{ active }</h3>
             <table>
                 <tr>
                     <th>Candy</th>
-                    <th>Price</th>
+                    <th>Total Bought</th>
                 </tr>
-
             {
-                purchases.map(
-                    (purchase) => { return <tr key={`table--${purchase.id}`}>
-                            <td key={`name--${purchase.id}`}>{purchase.product.name}</td>
-                            <td key={`price--${purchase.id}`}>{purchase.product.price}</td>
-                        </tr>
-                    }
-                )
+                [...totals].map(([key, value]) => {
+                    return <tr key={key}>
+                        <td>{value.name}</td>
+                        <td>{value.total}</td>
+                    </tr>
+                })
             }
+
             </table>
         </>
     )
