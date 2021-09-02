@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { getAllProducts } from "../ApiManager"
 
 
@@ -30,7 +31,7 @@ export const InventoryList = ({searchState}) => {
     return (
         <>
             <h2>Search Results:</h2>
-            <p>{searchResults?.name}</p>
+            <Link to="/productList">{searchResults?.name}</Link>
         </>
     )
 }
