@@ -1,44 +1,26 @@
-import { useEffect, useState } from "react"
-import { getAllProducts } from "../ApiManager"
+import { useState } from "react"
 import "./Inventory.css"
 
 
-export const InventorySearch = () => {
-    const [products, updateProducts] = useState([])
-    const [searchTerm, updateSearchTerm] = useState({})
-
-    useEffect(
-        () => {
-            getAllProducts()
-                .then((data) => { updateProducts(data) })
-        },
-        []
-    )
-
-
+export const InventorySearch = ({updateSearchState}) => {
 
     return (
         <>
             <h2>Inventory Search</h2>
 
             <section>
-                <form className="form--search">
+                <form className="form--search" onSubmit={(event) => {event.preventDefault()}}>
                     <fieldset className="searchField">
                         <input onChange = {
                             (evt) => {
-                                const search = evt.target.value
-                                updateSearchTerm(search)
+                                 const search = evt.target.value
+                                 updateSearchState(search)
                             }
                         }
                             type="text"
                             className="search"
                             placeholder="Enter search terms here"
                             required autoFocus />
-                    </fieldset>
-                    <fieldset>
-                        <button type="search">
-                            Search
-                        </button>
                     </fieldset>
                 </form>
             </section>
