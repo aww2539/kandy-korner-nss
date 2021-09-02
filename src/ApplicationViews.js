@@ -3,6 +3,7 @@ import { Route } from "react-router-dom"
 import { CustomerList } from "./customers/Customers"
 import { Employees } from "./employees/Employees"
 import { HiringForm } from "./employees/HireEmployee"
+import { Inventory } from "./Inventory/Inventory"
 import { Locations } from "./locations/Locations"
 import { Orders } from "./orders/Orders"
 import { ProductList } from "./products/productList"
@@ -35,6 +36,10 @@ export const ApplicationViews = () => {
                     <Route exact path="/orders/:userId(\d+)">
                         <Orders />
                     </Route>
+
+            <Route exact path="/inventory">
+                <Inventory />
+            </Route>
                     
 
         </>

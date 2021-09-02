@@ -38,6 +38,7 @@ export const Orders = () => {
 
             if (purchaseList.has(purchase.productId)) {
                purchaseList.get(purchase.productId).total++
+               purchaseList.get(purchase.productId).price += purchaseList.get(purchase.productId).price
             
             } else {
                 purchaseList.set(purchase.productId, {total: 1, price: purchase.product.price, name: purchase.product.name})
@@ -45,10 +46,8 @@ export const Orders = () => {
         }
         return purchaseList
     }
-    
 
     
-
 
     return ( 
         
@@ -58,13 +57,15 @@ export const Orders = () => {
             <table>
                 <tr>
                     <th>Candy</th>
-                    <th>Total Bought</th>
+                    <th>Quantity</th>
+                    <th>Total Cost</th>
                 </tr>
             {
                 [...totals].map(([key, value]) => {
                     return <tr key={key}>
                         <td>{value.name}</td>
                         <td>{value.total}</td>
+                        <td>${value.price}</td>
                     </tr>
                 })
             }
